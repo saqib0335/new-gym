@@ -3,14 +3,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { Dumbbell, Home, Wallet, Info, Phone, ChevronDown, Menu, X, User, BarChart3 } from 'lucide-react';
 import { useAuth } from '../contexts/AutheriseContext'; // Assuming this path is correct
 import LoginModel from './LoginModel';
+import { useNavigate } from 'react-router-dom';
+
 
 const Navbar = () => {
   const [language, setLanguage] = useState('en');
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+  return localStorage.getItem('theme') === 'dark';
+});
   // Destructure 'logout' from useAuth()
   const { isAuthorized, signOut, user } = useAuth();
+  const navigate = useNavigate();
 
   const dropdownRef = useRef(null);
   const location = useLocation();
@@ -29,6 +35,23 @@ const Navbar = () => {
   { path: '/dashboard', label: { en: 'Dashboard', ar: 'لوحة التحكم' }, icon: BarChart3 }
 ];
   const navLinks = isAuthorized ? authLinks : commonLinks;
+
+  const handleLogout = () => {
+  signOut();       // from context
+  navigate('/');   // go to home page after logout
+};
+
+   const toggleDarkMode = () => {
+        const newTheme = !darkMode;
+        setDarkMode(newTheme);
+        document.documentElement.classList.toggle('dark', newTheme);
+        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    const isDark = localStorage.getItem('theme') === 'dark';
+    document.documentElement.classList.toggle('dark', isDark);
+  }, []);
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
@@ -105,7 +128,8 @@ const Navbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-md"
+                  className="flex items-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 
+                  rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-md"
                 >
                   {language === 'en' ? (
                     <>
@@ -150,6 +174,16 @@ const Navbar = () => {
                     </button>
                   </div>
                 </div>
+                 <button
+                      onClick={toggleDarkMode}
+                      className="text-sm px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 
+                      text-gray-700 dark:text-white hover:shadow-md transition-all duration-300"
+                    >
+                      {darkMode
+                        ? (language === 'en' ? 'Light Mode' : 'وضع النهار')
+                        : (language === 'en' ? 'Dark Mode' : 'الوضع الليلي')}
+                  </button>
+
               </div>
 
               {/* Auth Buttons (Desktop) */}
@@ -160,8 +194,9 @@ const Navbar = () => {
                   </div>
                   <span className="text-sm font-medium text-gray-700">{user?.name}</span>
                   <button
-                    onClick={signOut}
-                    className="px-4 py-2 text-sm font-medium text-white ml-8 bg-emerald-600 rounded-lg hover:text-emerald-600 transition-colors"
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-sm font-medium text-white ml-8 bg-emerald-600 rounded-lg hover:text-emerald-700 hover:bg-white
+                     transition-colors cursor-pointer"
                   >
                     {language === 'en' ? 'Logout' : 'تسجيل الخروج'}
                   </button>
@@ -213,6 +248,7 @@ const Navbar = () => {
                     onClick={() => {
                     setMenuOpen(false); // Close mobile menu on logout
                     signOut();
+                    na
                   }}
                   className="flex items-center px-3 py-2 rounded-md font-medium text-red-600 hover:bg-red-50 w-full text-left
                     transition-colors"

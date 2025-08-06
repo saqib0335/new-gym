@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AutheriseContext';
 import { X, Mail, Lock } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 
 const LoginModel = ( {onClose}) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,13 +11,17 @@ const LoginModel = ( {onClose}) => {
      password:''
   })
  const { signIn, signUp } = useAuth();
+ 
+ const navigate = useNavigate();
+
 
  const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     if (isLogin) {
       await signIn({ email: data.email, password: data.password });
-      onClose(); // close modal after login
+      onClose();
+      navigate('/profile')
     } else {
       await signUp({
         name: data.name,
@@ -108,7 +112,7 @@ const LoginModel = ( {onClose}) => {
         </div>
           <button type='submit'
            className='block w-full bg-emerald-600 text-white py-2 px-4 rounded-lg 
-           font-medium hover:bg-emerald-700 transition-colors'>
+                font-medium hover:bg-emerald-700 transition-colors'>
             {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
@@ -117,7 +121,7 @@ const LoginModel = ( {onClose}) => {
             {isLogin ? "Don't have an account?" : "Already have an account?"}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="ml-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+              className="ml-1 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-300 font-medium transition-colors"
             >
               {isLogin ? 'Sign Up' : 'Sign In'}
             </button>

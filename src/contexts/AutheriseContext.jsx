@@ -59,6 +59,7 @@ export const AutheriseProvider = ({ children }) => {
   const signOut = () => {
     localStorage.removeItem('loggedInUser');
     setUser(null);
+   
   };
 
   if (loading) return null; // Or show a spinner while loading
