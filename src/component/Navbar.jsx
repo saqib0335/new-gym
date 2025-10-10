@@ -1,61 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Dumbbell, Home, Wallet, Info, Phone, ChevronDown, Menu, X, User, BarChart3 } from 'lucide-react';
+import { Sun, Moon, Dumbbell, Home, Wallet, Info, Phone, ChevronDown, Menu, X, User, BarChart3 } from 'lucide-react';
 import { useAuth } from '../contexts/AutheriseContext'; // Assuming this path is correct
 import LoginModel from './LoginModel';
 import { useNavigate } from 'react-router-dom';
 
 
-const Navbar = () => {
-  const [language, setLanguage] = useState('en');
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-  return localStorage.getItem('theme') === 'dark';
-});
-  // Destructure 'logout' from useAuth()
-  const { isAuthorized, signOut, user } = useAuth();
-  const navigate = useNavigate();
+    const Navbar = () => {
 
-  const dropdownRef = useRef(null);
-  const location = useLocation();
+      const [language, setLanguage] = useState('en');
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); 
+      const [dropdownOpen, setDropdownOpen] = useState(false);
+      const [darkMode, setDarkMode] = useState(() => {
+        return localStorage.getItem('theme') === 'dark';
+    });
+      // Destructure 'logout' from useAuth()
+      const { isAuthorized, signOut, user } = useAuth();
+      const navigate = useNavigate();
 
-  const isRTL = language === 'ar';
+      const dropdownRef = useRef(null);
+      const location = useLocation();
 
-  const commonLinks = [
-    { path: '/', label: { en: 'Home', ar: 'الرئيسية' }, icon: Home },
-    { path: '/membership', label: { en: 'Membership plan', ar: 'الأسعار' }, icon: Wallet },
-    { path: '/About', label: { en: 'About', ar: 'معلومات' }, icon: Info },
-    { path: '/contact', label: { en: 'Contact', ar: 'تواصل' }, icon: Phone },
-  ];
+      const isRTL = language === 'ar';
 
-  const authLinks = [
-  { path: '/profile', label: { en: 'Profile', ar: 'الملف الشخصي' }, icon: User },
-  { path: '/dashboard', label: { en: 'Dashboard', ar: 'لوحة التحكم' }, icon: BarChart3 }
-];
-  const navLinks = isAuthorized ? authLinks : commonLinks;
+      const commonLinks = [
+        { path: '/', label: { en: 'Home', ar: 'الرئيسية' }, icon: Home },
+        { path: '/membership', label: { en: 'Membership plan', ar: 'الأسعار' }, icon: Wallet },
+        { path: '/About', label: { en: 'About', ar: 'معلومات' }, icon: Info },
+        { path: '/contact', label: { en: 'Contact', ar: 'تواصل' }, icon: Phone },
+      ];
 
-  const handleLogout = () => {
-  signOut();       // from context
-  navigate('/');   // go to home page after logout
-};
+      const authLinks = [
+      { path: '/profile', label: { en: 'Profile', ar: 'الملف الشخصي' }, icon: User },
+      { path: '/dashboard', label: { en: 'Dashboard', ar: 'لوحة التحكم' }, icon: BarChart3 }
+    ];
+      const navLinks = isAuthorized ? authLinks : commonLinks;
 
-   const toggleDarkMode = () => {
-        const newTheme = !darkMode;
-        setDarkMode(newTheme);
-        document.documentElement.classList.toggle('dark', newTheme);
-        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-  };
+      const handleLogout = () => {
+      signOut();       // from context
+      navigate('/');   // go to home page after logout
+    };
 
-  useEffect(() => {
-    const isDark = localStorage.getItem('theme') === 'dark';
-    document.documentElement.classList.toggle('dark', isDark);
-  }, []);
+      const toggleDarkMode = () => {
+            const newTheme = !darkMode;
+            setDarkMode(newTheme);
+            document.documentElement.classList.toggle('dark', newTheme);
+            localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+      };
+
+        useEffect(() => {
+          const isDark = localStorage.getItem('theme') === 'dark';
+          document.documentElement.classList.toggle('dark', isDark);
+        }, []);
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
-    setDropdownOpen(false);    // Apply RTL to document
+    setDropdownOpen(false); // Close dropdown after selection
+       // Apply RTL to document
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
   };
@@ -66,32 +68,33 @@ const Navbar = () => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
           setDropdownOpen(false);
         }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location]);
+    // Close mobile menu when route changes           
+    useEffect(() => {
+      setMenuOpen(false);
+    }, [location]);
 
-  // Set initial RTL on component mount
-  useEffect(() => {
-    // Apply RTL or LTR based on initial language
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [language]); // Depend on 'language' to re-run if it changes
-  const isActivePage = (path) => location.pathname === path;
+    // Set initial RTL on component mount
+    useEffect(() => {
+      // Apply RTL or LTR based on initial language
+      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = language;
+    }, [language]); // Depend on 'language' to re-run if it changes
+    const isActivePage = (path) => location.pathname === path;
 
   return (
     <>
-      <nav className=" top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200/50 shadow-sm">
+      <nav className="top-0 bg-white/95 dark:bg-gray-900 border-b
+       border-gray-200/50 dark:border-gray-700 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Logo */}
             <Link
-              to="/"
+              to={"/"}
               className="flex items-center space-x-3 rtl:space-x-reverse group transition-all duration-300 hover:scale-105"
             >
               <div className="p-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg group-hover:shadow-emerald-200/50 transition-all duration-300">
@@ -103,7 +106,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1 rtl:space-x-reverse">
+            <div className="hidden md:flex pl-3 items-center space-x-1.5 rtl:space-x-reverse">
               {navLinks.map(({ path, label, icon: Icon }) => (
                 <Link
                   key={path}
@@ -123,12 +126,12 @@ const Navbar = () => {
               ))}
             </div>
             {/* Language Dropdown & Auth/Mobile Menu Button */}
-            <div className="flex items-center space-x-3 rtl:space-x-reverse">
+            <div className="flex z-50  items-center space-x-3 rtl:space-x-reverse">
               {/* Language Dropdown */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 
+                  className="flex items-center  px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 
                   rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-md"
                 >
                   {language === 'en' ? (
@@ -148,15 +151,16 @@ const Navbar = () => {
                 {/* Language Dropdown Menu */}
                 <div className={`
                   absolute ${isRTL ? 'left-0' : 'right-0'} mt-2 w-40 bg-white rounded-xl shadow-xl border border-gray-100
-                  transition-all duration-300 transform origin-top
-                  ${dropdownOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}
+                  transition-all duration-300 transform origin-top z-50
+                  ${dropdownOpen ? 'opacity-100 scale-100 translate-y-0' :
+                     'opacity-0 scale-95 -translate-y-0 pointer-events-none'}
                 `}>
-                  <div className="py-2">
+                  <div className="py-2 ">
                     <button
                       onClick={() => handleLanguageChange('en')}
                       className={`
-                        w-full px-4 py-3 text-left hover:bg-emerald-50 flex items-center transition-all duration-200
-                        ${language === 'en' ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700 hover:text-emerald-600'}
+                        w-full px-4 py-3 text-left  flex items-center transition-all duration-200 hover:bg-emerald-50
+                        ${language === 'en' ? ' text-emerald-700 ' : 'text-gray-700 hover:text-emerald-600 '}
                       `}
                     >
                       <span className="text-lg mr-3">🇺🇸</span>
@@ -165,26 +169,46 @@ const Navbar = () => {
                     <button
                       onClick={() => handleLanguageChange('ar')}
                       className={`
-                        w-full px-4 py-3 text-left hover:bg-emerald-50 flex items-center transition-all duration-200
-                        ${language === 'ar' ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700 hover:text-emerald-600'}
+                        w-full px-4 py-3 text-left  flex items-center transition-all duration-200 hover:bg-emerald-50
+                        ${language === 'ar' ? ' text-emerald-700 ' : 'text-gray-700 hover:text-emerald-600  '}
                       `}
                     >
                       <span className="text-lg mr-3">🇸🇦</span>
                       <span className="font-medium">العربية</span>
-                    </button>
+                    </button>  
                   </div>
                 </div>
-                 <button
-                      onClick={toggleDarkMode}
-                      className="text-sm px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-700 
-                      text-gray-700 dark:text-white hover:shadow-md transition-all duration-300"
-                    >
-                      {darkMode
-                        ? (language === 'en' ? 'Light Mode' : 'وضع النهار')
-                        : (language === 'en' ? 'Dark Mode' : 'الوضع الليلي')}
-                  </button>
-
               </div>
+              {/* Dark Mode Toggle */}
+              <div className="flex items-center">
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={darkMode}
+                      onChange={toggleDarkMode}
+                      className="sr-only peer"
+                    />
+                    <div
+                      className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 
+                                peer-focus:ring-emerald-500 dark:peer-focus:ring-emerald-600
+                                rounded-full peer dark:bg-gray-700 peer-checked:bg-emerald-600 
+                                transition-colors duration-300"
+                    >
+                      {/* Moving circle with icon */}
+                      <div
+                        className={`absolute top-[2px] left-[2px] flex items-center justify-center
+                                  h-5 w-5 rounded-full bg-white border border-gray-300 dark:border-gray-600
+                                  transition-transform duration-300 ${darkMode ? 'translate-x-5' : ''}`}
+                      >
+                        {darkMode ? (
+                          <Sun className="w-3.5 h-3.5 text-yellow-400" />
+                        ) : (
+                          <Moon className="w-3.5 h-3.5 text-gray-800" />
+                        )}
+                      </div>
+                    </div>
+                  </label>
+                </div>
 
               {/* Auth Buttons (Desktop) */}
               {isAuthorized ? (
@@ -253,7 +277,7 @@ const Navbar = () => {
                   className="flex items-center px-3 py-2 rounded-md font-medium text-red-600 hover:bg-red-50 w-full text-left
                     transition-colors"
                 >
-                  {language === 'en' ? 'Logout' : 'تسجيل الخروج'}
+                  {language === 'en' ? 'Signout' : 'تسجيل الخروج'}
                 </button>
               ) : (
                 <button

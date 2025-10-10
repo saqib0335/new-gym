@@ -34,15 +34,16 @@ const PersonalData = () => {
       }
     }, []);
   return (
-    <div className='min-h-screen bg-gray-50 pt-6'>
-       <div className='max-w-7xl mx-auto px-6 sm:px-6 lg:px-8'>
+    <div className='min-h-screen bg-gray-50 pt-6 dark:bg-gray-900 transition-colors'>
+       <div className='max-w-9xl mx-auto pt-5 px-6 sm:px-6 lg:px-8'>
            <div className='mb-6'>
-              <h2 className='text-gray-700 font-bold text-3xl'>Profile</h2>
-              <p className='text-gray-700 text-lg'>Manage your account and preferences</p>
+              <h2 className='text-gray-700 dark:text-white font-bold text-3xl'>Profile</h2>
+              <p className='text-gray-700 dark:text-white text-lg'>Manage your account and preferences</p>
            </div>
            <div className='grid lg:grid-cols-4 gap-8'>
             <div className='lg:col-span-1'>
-              <div className='bg-white rounded-2xl shadow-md p-6 mb-4'>
+              <div className='bg-white rounded-2xl shadow-md p-6 mb-4 text-gray-600
+                  dark:bg-gray-800 dark:text-white'>
                 <div className='text-center mb-6'>
                   <div className='relative inline-block'>
                     <label htmlFor="profile-upload" className='cursor-pointer'>
@@ -51,7 +52,8 @@ const PersonalData = () => {
                         alt="Profile"
                         className='w-20 h-20 mx-auto rounded-full object-cover border border-gray-300'
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full flex items-center justify-center text-white opacity-0 hover:opacity-100 transition">
+                      <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full flex items-center 
+                            justify-center text-white opacity-0 hover:opacity-100 transition">
                         <span className="text-sm">Change</span>
                       </div>
                     </label>
@@ -63,18 +65,18 @@ const PersonalData = () => {
                       onChange={handleImageUpload}// You’ll define this
                     />
                   </div>
-                  <h3 className='text-gray-600 font-medium mt-4'>{user?.name || 'Guest User'}</h3>
-                  <p className='text-gray-600'>{user?.email}</p>
+                  <h3 className='font-medium mt-4'>{user?.name || 'Guest User'}</h3>
+                  <p>{user?.email}</p>
                 </div>
               </div>
               <nav className='space-y-2'>
                 {tabs.map((tab) => (
                   <button 
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)} 
-                  className={`w-full flex items-center space-x-3 p-3 hover:cursor-pointer
-                    rounded-lg
-                   ${activeTab === tab.id ? 'bg-emerald-600 text-white ' : 'text-gray-700'}`}>
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)} 
+                      className={`w-full flex items-center space-x-3 p-3 hover:cursor-pointer
+                        rounded-lg
+                      ${activeTab === tab.id ? 'bg-emerald-600 text-white ' : 'text-gray-700'}`}>
                     <tab.icon className='w-6 h-6' />
                     <span className=''>{tab.label}</span>
                   </button>
@@ -83,10 +85,11 @@ const PersonalData = () => {
             </div>
 
             <div className='lg:col-span-3'>
-              <div className='bg-white rounded-lg shadow-md'>
+              <div className='bg-white rounded-lg shadow-md 
+                dark:bg-gray-800 dark:text-white'>
                 {activeTab === 'profile' && (
                   <div className='p-6'>
-                    <h3 className='text-gray-700 font-semibold text-xl mb-4'>Profile Information</h3>
+                    <h3 className='text-gray-700 dark:text-white font-semibold text-xl mb-4'>Profile Information</h3>
                     <form className='space-y-6'>
                       <div className='grid lg:grid-cols-2 gap-6'>
                         <div>
@@ -139,7 +142,7 @@ const PersonalData = () => {
                 )}
                 {activeTab === 'membership' && (
                   <div className='p-6'>
-                    <h3 className='text-xl mb-4 text-gray-700'>Membership Details</h3>
+                    <h3 className='text-xl mb-4 text-gray-700 dark:text-white'>Membership Details</h3>
                     <div className='space-y-4 bg bg-gradient-to-r from-emerald-500 to-blue-300 p-6 rounded-lg'>
                       <div className='flex justify-between items-start mb-4'>
                         <div>
@@ -152,7 +155,7 @@ const PersonalData = () => {
                 )}
                 {activeTab === "achievements" && (
                   <div className='p-6'>
-                    <h3 className='text-xl mb-4 text-gray-700'>Achievements</h3>
+                    <h3 className='text-xl mb-4 text-gray-700 dark:text-white'>Achievements</h3>
                   </div>
                 )}
               </div>

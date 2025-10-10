@@ -120,15 +120,15 @@ const GymSearch = () => {
       }
 
   return (
-   <div className='min-h-screen bg-gray-100 pt-8 pb-8'>
+   <div className='min-h-screen bg-gray-100 pt-8 pb-8 dark:bg-gray-900 transition-colors duration-300'>
     <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
       {/*Header Section */}
-      <div className='mb-8'>
+      <div className='mb-8  dark:text-white'>
         <h1 className='font-bold text-4xl'>Find Your Perfect Gym</h1>
         <p className='mt-6 text-lg text-gray-500'>Discover premium fitness facilities in your area</p>
       </div>
       {/*Search Filter */}
-      <div className='bg-white rounded-lg shadow-md p-6 mb-7'>
+      <div className='bg-white rounded-lg shadow-md p-6 mb-7 dark:bg-gray-800'>
         <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6'>
              {/*Search Gym*/}
           <div className='relative'>
@@ -163,9 +163,9 @@ const GymSearch = () => {
           </select>
         </div>
         {/*Filter Section */}
-        <div className='flex items-center gap-2 mb-2'>
-          <Filter  className='h-5 w-5 text-gray-500'/>
-          <h1 className='font-medium text-gray-600'>Amenities:</h1>
+        <div className='flex items-center gap-2 mb-2 text-gray-600 dark:text-white'>
+          <Filter  className='h-5 w-5'/>
+          <h1 className='font-medium '>Amenities:</h1>
         </div>
         <div className='flex flex-wrap gap-2'>
             {allFilters.map((filter) =>(
@@ -186,7 +186,8 @@ const GymSearch = () => {
       {/*Gym List Section */}
       <div className='grid md:grid-cols-2 lg:grid-cols-1 gap-5'>
         {filteredGyms.slice(0, showMore).map((gym, id) => (
-          <div key={id} className='bg-white overflow-hidden rounded-lg shadow-md mb-4'>
+          <div key={id} className='bg-white overflow-hidden rounded-lg shadow-md mb-4 dark:bg-gray-800
+           dark:text-white transition-colors duration-300'>
             <div className='md:flex'>
               <div className='md:w-1/3'>
                 <img src={gym.image} alt={gym.name} className='w-full h-60 md:h-full object-cover hover:cursor-pointer'/>

@@ -95,7 +95,7 @@ const LoginModel = ( {onClose}) => {
             </div>
           </div>
           <div>
-            <label className='block mb-2 text-sm font-medium'>Password:</label>
+            <label className='block mb-2 text-sm font-medium'>Password</label>
             <div className='relative'>
               <Lock className='absolute left-3 top-1/2 h-5 w-5 transform -translate-y-1/2 text-gray-400' />
               <input 
@@ -121,7 +121,8 @@ const LoginModel = ( {onClose}) => {
             {isLogin ? "Don't have an account?" : "Already have an account?"}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="ml-1 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-300 font-medium transition-colors"
+              className="ml-1 text-emerald-700 hover:bg-emerald-600 hover:rounded-md hover:px-1 hover:text-white
+              hover:cursor-pointer font-medium transition-colors"
             >
               {isLogin ? 'Sign Up' : 'Sign In'}
             </button>

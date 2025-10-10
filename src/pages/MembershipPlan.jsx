@@ -52,13 +52,16 @@ const MembershipPlan = () => {
 
   ]
   return (
-    <div className='flex justify-center min-h-screen bg-gray-100'>
+    <div className='flex justify-center min-h-screen bg-gray-100
+     dark:bg-gray-900 transition-colors'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <h2 className='mt-5 text-center font-bold text-2xl text-emerald-700'>FitPass Fitness Plans For Members</h2>
          <div className='m-4'>
            <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-15'>
             {gymPlans.map((gym) => (
-            <div key={gym.id} className='bg-white rounded-2xl flex py-10 px-10 transition-shadow duration-400 flex-col items-bottom justify-between '>
+            <div key={gym.id} className='bg-white rounded-2xl flex py-10 px-10
+             transition-shadow duration-400 flex-col items-bottom justify-between
+             shadow-lg hover:shadow-2xl dark:bg-gray-800 dark:text-white'>
               
                 <h2 className='font-bold text-xl text-emerald-700'>{gym.name}</h2>
                   <p className=' mt-1'>{gym.description}</p>
