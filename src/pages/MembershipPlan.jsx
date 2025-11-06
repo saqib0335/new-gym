@@ -4,7 +4,7 @@ import axios from 'axios'
 const MembershipPlan = () => {
            const [data, setData] = useState([]) 
            useEffect(() => 
-            { axios.get("https://rvalvar.alwaysdata.net/api/v1/membership-plans") 
+            { axios.get("/api/v1/membership-plans") 
               .then(res => setData(res.data.data)) 
               .catch(err => console.error(err)) 
             },[])
