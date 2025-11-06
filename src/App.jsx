@@ -22,7 +22,6 @@ const App = () => {
       <Routes>
         {/* Public Route */}
         <Route path="/" element={<HomePage />} />
-
         {/* Private Routes */}
         <Route
           path="/dashboard"
@@ -32,24 +31,9 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/gym-search"
-          element={
-            
-              <GymSearch />
-            
-          }
-        />
-        <Route
-          path="/membership"
-          element={
-           
-              <MembershipPlan />
-            
-          }
-        />
-        <Route
-          path="/profile"
+        <Route path="/gym-search"  element={<GymSearch /> } />
+        <Route path="/membership"  element={<MembershipPlan /> } />
+        <Route  path="/profile"
           element={
             <PrivateRoute>
               <PersonalData />
@@ -60,10 +44,7 @@ const App = () => {
     </div>
   </Router>
 </AutheriseProvider>
- 
-
   )  
 }
-
 export default App
 

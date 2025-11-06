@@ -194,29 +194,29 @@ const GymSearch = () => {
               </div>
               <div className='md:w-2/3 p-6'>
                   <div className='flex justify-between items-start mb-4'>
-                      <div>
-                          <h2 className='text-2xl font-semibold text-gray-800'>{gym.name}</h2>
-                           <div className='flex items-center mb-2 text-gray-500 '>
-                                <MapPin className='h-4 w-4 mr-1' />
-                                <span className='text-sm'>{gym.location}</span>
-                                <span className='mx-2'>•</span>
-                                <span className='text-sm ml-1'>{gym.distance}</span>
-                           </div>
-                      
-                            <div className='flex items-center mb-2 '>
-                                <div className='flex items-center'>
-                                  <Star className='h-4 w-4 mr-1 text-yellow-500 fill-current' />
-                                  <span className='font-medium text-black'>{gym.rating}</span>
+                             <div>
+                                <h2 className='text-2xl font-semibold text-gray-800'>{gym.name}</h2>
+                                  <div className='flex items-center mb-2 text-gray-500 '>
+                                      <MapPin className='h-4 w-4 mr-1' />
+                                      <span className='text-sm'>{gym.location}</span>
+                                      <span className='mx-2'>•</span>
+                                      <span className='text-sm ml-1'>{gym.distance}</span>
+                                  </div>
+                            
+                                  <div className='flex items-center mb-2 '>
+                                      <div className='flex items-center'>
+                                        <Star className='h-4 w-4 mr-1 text-yellow-500 fill-current' />
+                                        <span className='font-medium text-black'>{gym.rating}</span>
+                                      </div>
+                                      <span className='mx-2'>•</span>
+                                      <span className='text-sm ml-1'>{gym.reviews} Reviews</span>
+                                  </div> 
                                 </div>
-                                <span className='mx-2'>•</span>
-                                <span className='text-sm ml-1'>{gym.reviews} Reviews</span>
-                            </div> 
-                      </div>
                                 <div className='text-right'>
                                   <div className='text-emerald-500 font-bold'>{gym.price}</div>
                                   <div className='text-sm text-gray-500'>Per Visit</div>
                                 </div>
-                  </div>
+                             </div>
                          <div className='flex items-center mt-4'>
                           <p>{gym.description}</p>
                          </div>
